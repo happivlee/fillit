@@ -12,7 +12,7 @@
 
 NAME = fillit
 
-SRC = //file names created will go here
+SRC = #file names created will go here
 
 OFILES = *.o
 

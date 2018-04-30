@@ -12,10 +12,38 @@
 
 #ifndef FILLIT_H
 # define FILLIT_H
+# define BUF_SIZE 21
 
-#include <sys/types.h> //may not need this or the following 2...?
-#include <sys/uio.h>
-#include <unistd.h>
-#include "libft.h"
+#include <fcntl.h>
+#include "libft/libft.h"
+
+typedef struct	s_tetralist
+{
+	char 	print;
+	//holds the coordinates of a given tetramino
+	struct	s_coord	**shape_coord; //this holds the coordinates of the 4 points (linked)
+	struct	s_tetralist	*next;
+} 				t_tetralist;
+
+//gives the coordinates of a single #
+typedef struct	s_coord
+{
+	int	row;
+	int col;
+}				t_coord;
+
+//struct used to create the solution map
+typedef struct	s_square
+{
+	int size;
+	char **solution_map;
+}				t_square;
+
+int			verify_shape(char *square);
+int 		get_shape(char *square, t_tetralist **list);
+int			read_file(int fd, t_tetralist **data);
+t_coord		**get_coord(char *square, t_coord **shape_coord);
+void		save_tetra(char *square, t_tetralist **complete_list);
+t_square    *solve(t_tetralist *clist);
 
 #endif
