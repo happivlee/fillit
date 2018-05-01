@@ -45,8 +45,8 @@ typedef struct	s_square
 int			verify_square(char *square);
 int			check_tetra(char *square, t_tetralist **current_list);
 int			read_file(int fd, t_tetralist **data);
-t_coord		**get_coord(char *square, t_coord **shape_coord);
-void		save_tetra(char *square, t_tetralist **complete_list);
+t_coord		**get_coord(char *square, t_coord **shape_coord, int j);
+void		save_tetra(char *square, t_tetralist **complete_list, int j);
 t_square    *new_square(int size);
 void		empty_square(t_square *solution_square, int size);
 int			fill_square(t_square *solution_square, t_tetralist *complete_list);

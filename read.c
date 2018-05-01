@@ -89,7 +89,7 @@ int	check_tetra(char *square, t_tetralist **current_list)
 	while (square[i] != '#')
 		i++;
 	if (peripheral_match == 6 || peripheral_match == 8)
-		save_tetra(&square[i], current_list);
+		save_tetra(square, current_list, i);
 	return (peripheral_match == 6 || peripheral_match == 8);
 }
 
@@ -113,7 +113,7 @@ int	read_file(int fd, t_tetralist **current_list)
 		nl = buffer[20];
 		ft_bzero(buffer, 22);
 	}
-	// if (nl != '\0')
-	// 	return (0);
+	if (nl != '\0')
+	 	return (0);
 	return (1);
 }

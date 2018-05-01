@@ -15,7 +15,7 @@
 //this file is for helper functions from list.c and helper.c - list.c first!!
 
 //get coordinates function of current sqaure & stores it into the coordinate structure
-t_coord	**get_coord(char *square, t_coord **shape_coord)
+t_coord	**get_coord(char *square, t_coord **shape_coord, int j)
 {
 	int hash_count;
 	int i;
@@ -38,8 +38,8 @@ t_coord	**get_coord(char *square, t_coord **shape_coord)
 		if (square[i] == '#')
 		{
 			//set the row value and column value for that #
-			shape_coord[hash_count]->row = (i / 5);
-			shape_coord[hash_count]->col = (i % 5);
+			shape_coord[hash_count]->row = (i / 5) - (j / 5);
+			shape_coord[hash_count]->col = (i % 5) - (j % 5);
 			//increment to prepare for when square[i] encounters another hash
 			hash_count++;
 		}
@@ -50,7 +50,7 @@ t_coord	**get_coord(char *square, t_coord **shape_coord)
 }
 
 //save tetramino's coordinates function
-void	save_tetra(char *square, t_tetralist **current_list)
+void	save_tetra(char *square, t_tetralist **current_list, int j)
 {
 	t_tetralist	*new;
 	int			list_length;
@@ -60,7 +60,7 @@ void	save_tetra(char *square, t_tetralist **current_list)
 	if (!new)
 	{
 		new = (t_tetralist *)ft_memalloc(sizeof(t_tetralist));
-		new->shape_coord = get_coord(square, new->shape_coord);
+		new->shape_coord = get_coord(square, new->shape_coord, j);
 		new->print = 'A';
 		new->next = NULL;
 		*current_list = new;
@@ -71,7 +71,7 @@ void	save_tetra(char *square, t_tetralist **current_list)
 	while (new->next && ++list_length)
 		new = new->next;
 	new->next = (t_tetralist *)ft_memalloc(sizeof(t_tetralist));
-	new->next->shape_coord = get_coord(square, new->shape_coord);
+	new->next->shape_coord = get_coord(square, new->shape_coord, j);
 	new->next->print = list_length + 'A';
 	new->next->next = NULL;
 }
