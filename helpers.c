@@ -95,6 +95,14 @@ int		place_tetra(t_square *sqr, t_tetralist *current_tetra, int y, int x)
 		//or a tetramino has already been placed there..
 		sqr->solution_map[row][col] != '.')
 			return (0);
+	}
+	hash = -1;
+	while (++hash < 4)
+	{
+		//pulls out the row value of the current hash
+		row = y + current_tetra->shape_coord[hash]->row;
+		//pulls out the column value of the current hash
+		col = x + current_tetra->shape_coord[hash]->col;
 		//sets the location equal to the Letter it represents!
 		sqr->solution_map[row][col] = current_tetra->print;
 	}
@@ -110,7 +118,7 @@ void	remove_tetra(t_square *sqr, t_tetralist *current_tetra)
 	while (i < sqr->size)
 	{
 		j = 0;
-		while (sqr->solution_map[i][j] != '\n')
+		while (sqr->solution_map[i][j] != '\0')
 		{
 			if (sqr->solution_map[i][j] == current_tetra->print)
 				sqr->solution_map[i][j] = '.';

@@ -100,10 +100,10 @@ t_square    *solve(t_tetralist *complete_list)
 	//while filling the square with tetraminos doesn't provide a viable solution
     while (!fill_square(solution_square, complete_list)) //if list is empty, skips this, and returns an empty square
     {
-		//increase the size of the solution map by one
-        size++;
 		//empty the square, and
         empty_square(solution_square, size);
+		//increase the size of the solution map by one
+        size++;
 		//set the square to the increased size
         solution_square = new_square(size);
     }

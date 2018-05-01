@@ -15,7 +15,9 @@
 # define BUF_SIZE 21
 
 #include <fcntl.h>
+#include <stdio.h>
 #include "libft/libft.h"
+#include <stdio.h> //remove after testing
 
 //struct will hold all valid tetraminos read
 typedef struct	s_tetralist

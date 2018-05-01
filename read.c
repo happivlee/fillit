@@ -21,7 +21,7 @@ int	verify_square(char *square)
 	i = 0;
 	while(square[i])
 	{
-		if (square[i] != '.' || square[i] != '#' || square[i] != '\n')
+		if (square[i] != '.' && square[i] != '#' && square[i] != '\n')
 			return (0);
 		if (square[i] == '#')
 			hash_count++;
@@ -86,7 +86,8 @@ int	check_tetra(char *square, t_tetralist **current_list)
 		i++;
 	}
 	i = 0;
-	while (square[i++] != '#')	//this should work - verify later when testing!
+	while (square[i] != '#')
+		i++;
 	if (peripheral_match == 6 || peripheral_match == 8)
 		save_tetra(&square[i], current_list);
 	return (peripheral_match == 6 || peripheral_match == 8);
@@ -107,12 +108,12 @@ int	read_file(int fd, t_tetralist **current_list)
 		if (!verify_square(buffer) || !check_tetra(buffer, current_list))
 			return (0);
 		//check to see if last char read is a new line if it's not zero
-		if (buffer[20] != '\n' && read(fd, buffer, 21) > 0)
+		if (buffer[20] != '\n' && buffer[20] > 0)
 			return (0);
 		nl = buffer[20];
 		ft_bzero(buffer, 22);
 	}
-	if (nl != '\0')
-		return (0);
+	// if (nl != '\0')
+	// 	return (0);
 	return (1);
 }
