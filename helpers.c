@@ -49,7 +49,7 @@ t_coord	**get_coord(char *square, t_coord **shape_coord)
 	return (shape_coord);
 }
 
-//save_element function
+//save tetramino's coordinates function
 void	save_tetra(char *square, t_tetralist **current_list)
 {
 	t_tetralist	*new;
@@ -76,7 +76,7 @@ void	save_tetra(char *square, t_tetralist **current_list)
 	new->next->next = NULL;
 }
 
-//puts the tetramino in the sqaure if it fits.
+//puts the tetramino in the sqaure if it fits. y = row, x = column...
 int		place_tetra(t_square *sqr, t_tetralist *current_tetra, int y, int x)
 {
 	int hash;
@@ -86,11 +86,16 @@ int		place_tetra(t_square *sqr, t_tetralist *current_tetra, int y, int x)
 	hash = -1;
 	while (++hash < 4)
 	{
+		//pulls out the row value of the current hash
 		row = y + current_tetra->shape_coord[hash]->row;
+		//pulls out the column value of the current hash
 		col = x + current_tetra->shape_coord[hash]->col;
-		if (row >= sqr->size || col >= sqr->size || /
+		//if the current tetra's row/column is greater than the current square size
+		if (row >= sqr->size || col >= sqr->size || \
+		//or a tetramino has already been placed there..
 		sqr->solution_map[row][col] != '.')
 			return (0);
+		//sets the location equal to the Letter it represents!
 		sqr->solution_map[row][col] = current_tetra->print;
 	}
 	return (1);
@@ -104,6 +109,30 @@ void	remove_tetra(t_square *sqr, t_tetralist *current_tetra)
 	i = 0;
 	while (i < sqr->size)
 	{
-		
+		j = 0;
+		while (sqr->solution_map[i][j] != '\n')
+		{
+			if (sqr->solution_map[i][j] == current_tetra->print)
+				sqr->solution_map[i][j] = '.';
+			j++;
+		}
+		i++;
 	}
+}
+
+void print_square(t_square *solution_square)
+{
+	int i;
+
+	i = -1;
+	//takes the solution square, and it prints it out - row by row
+	while (solution_square->solution_map[++i])
+	{
+		//write the string
+		ft_putstr((const char *)solution_square->solution_map[i]);
+		//write a new line
+		ft_putchar('\n');
+	}
+	//write a new line
+	ft_putchar('\n');
 }

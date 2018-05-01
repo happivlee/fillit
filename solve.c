@@ -44,7 +44,7 @@ t_square    *new_square(int size)
 }
 
 //erases the solution square by freeing the memory
-void empty_square(t_square *solution_square, int size)
+void	empty_square(t_square *solution_square, int size)
 {
 	//take the solution square and empty it from the inside out
 	while (size + 1)
@@ -59,11 +59,12 @@ void empty_square(t_square *solution_square, int size)
 	free(solution_square);
 }
 
-//actually solves the square
-int fill_square(t_square *solution_square, t_tetralist *complete_list)
+//actually solves the square - 2 parameters: 1 = the current size square, 2 = the list of tetraminos that need to fit in the square
+int	fill_square(t_square *solution_square, t_tetralist *complete_list)
 {
 	int i;
 	int j;
+	//do we need this? the list would never be empty, since it would have errored out during read file?
 	if (complete_list == NULL)
 		return (1);
 	i = 0;
@@ -72,14 +73,18 @@ int fill_square(t_square *solution_square, t_tetralist *complete_list)
 		j = 0;
 		while (j < solution_square->size)
 		{
+			//if it successfully places the current tetra..
 			if (place_tetra(solution_square, complete_list, i, j))
 			{
-				if (solver(solution_square, complete_list->next))
+				//check to see if there are other tetras??...do we have a solver fcn somewhere??
+				if (fill_square(solution_square, complete_list->next))
 					return (1);
 				remove_tetra(solution_square, complete_list);
 			}
+			//move the tetra to the right one, and try again..
 			j++;
 		}
+		//move the tetra down one row, and try again..
 		i++;
 	}
 	return (0);
@@ -93,7 +98,7 @@ t_square    *solve(t_tetralist *complete_list)
     size = 2;
     solution_square = new_square(size);
 	//while filling the square with tetraminos doesn't provide a viable solution
-    while (!fill_square(solution_square, complete_list))
+    while (!fill_square(solution_square, complete_list)) //if list is empty, skips this, and returns an empty square
     {
 		//increase the size of the solution map by one
         size++;

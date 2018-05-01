@@ -27,7 +27,7 @@ int	verify_square(char *square)
 			hash_count++;
 		if (square[i] == '\n')
 		{
-			if (!(i = 4 || i = 9 || i = 14 || i = 19 || i = 20))
+			if (!(i == 4 || i == 9 || i == 14 || i == 19 || i == 20))
 				return (0);
 		}
 		i++;
@@ -36,6 +36,7 @@ int	verify_square(char *square)
 }
 
 //Juo's method of detecting tetraminos - it includes verifying the square
+/*
 int get_shape(char *square, t_tlist **list)
 {
 	int i;
@@ -58,6 +59,7 @@ int get_shape(char *square, t_tlist **list)
 		return (1);
 	return (0);
 }
+*/
 
 //checks for a valid shape - not sure how this saves coordinates based on the related github..
 int	check_tetra(char *square, t_tetralist **current_list)
@@ -86,7 +88,7 @@ int	check_tetra(char *square, t_tetralist **current_list)
 	i = 0;
 	while (square[i++] != '#')	//this should work - verify later when testing!
 	if (peripheral_match == 6 || peripheral_match == 8)
-		save_tetra(&square[i], list);
+		save_tetra(&square[i], current_list);
 	return (peripheral_match == 6 || peripheral_match == 8);
 }
 
@@ -102,7 +104,7 @@ int	read_file(int fd, t_tetralist **current_list)
 	while (read(fd, buffer, 21) > 0)
 	{
 		//check to see if the block read is a valid square && tetramino
-		if (!verify_shape(*square) || !check_tetra(square, current_list))
+		if (!verify_square(buffer) || !check_tetra(buffer, current_list))
 			return (0);
 		//check to see if last char read is a new line if it's not zero
 		if (buffer[20] != '\n' && read(fd, buffer, 21) > 0)

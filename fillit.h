@@ -17,6 +17,7 @@
 #include <fcntl.h>
 #include "libft/libft.h"
 
+//struct will hold all valid tetraminos read
 typedef struct	s_tetralist
 {
 	char 	print;
@@ -39,11 +40,17 @@ typedef struct	s_square
 	char **solution_map;
 }				t_square;
 
-int			verify_shape(char *square);
-int 		get_shape(char *square, t_tetralist **list);
+int			verify_square(char *square);
+int			check_tetra(char *square, t_tetralist **current_list);
 int			read_file(int fd, t_tetralist **data);
 t_coord		**get_coord(char *square, t_coord **shape_coord);
 void		save_tetra(char *square, t_tetralist **complete_list);
+t_square    *new_square(int size);
+void		empty_square(t_square *solution_square, int size);
+int			fill_square(t_square *solution_square, t_tetralist *complete_list);
 t_square    *solve(t_tetralist *clist);
+int			place_tetra(t_square *sqr, t_tetralist *current_tetra, int y, int x);
+void		remove_tetra(t_square *sqr, t_tetralist *current_tetra);
+void		print_square(t_square *solution_square);
 
 #endif

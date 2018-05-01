@@ -12,20 +12,30 @@
 
 NAME = fillit
 
-SRC = #file names created will go here
+LIBFT = libft/libft.a
+
+SRC =	helpers.c \
+		main.c \
+		read.c \
+		solve.c
 
 OFILES = *.o
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(LIBFT)
 	gcc -Wall -Wextra -Werror -c $(SRC)
-	ar cr $(NAME) $(OFILES)
+	gcc $(OFILES) $(LIBFT) -o $(NAME)
+
+$(LIBFT):
+	make -C libft
 
 clean:
 	/bin/rm -f $(OFILES)
+	/bin/rm -f libft/$(OFILES)
 
 fclean: clean
 	/bin/rm -f $(NAME)
+	/bin/rm -f $(LIBFT)
 
 re: fclean all
